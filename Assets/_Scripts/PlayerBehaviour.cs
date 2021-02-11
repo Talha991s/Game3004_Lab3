@@ -62,7 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
         //toggle minimap by pressing M
         if(Input.GetKeyDown(KeyCode.M))
         {
-            MiniMapBorder.SetActive(!MiniMapBorder.get);
+            MiniMapBorder.SetActive(!MiniMapBorder.activeInHierarchy);
         }
     }
 

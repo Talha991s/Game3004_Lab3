@@ -6,10 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public List<GameObject> Tiles;
+    public int width;
+    public int depth;
+    public Transform Tileparent;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _builMap();
     }
 
     // Update is called once per frame
@@ -17,22 +22,38 @@ public class GameController : MonoBehaviour
     {
         
     }
+    private void _builMap()
+    {
+        for (int row = 0; row < depth; row++)
+        {
+            for(int col = 0; col<width;col++)
+            {
+                var randomTileIndex = Random.Range(0, 2);
+                var randomRotationIndex = Random.Range(0, 4);
+                var randomTiles = Instantiate(Tiles[randomTileIndex], new Vector3(row*16.0f, 0.0f,col*16.0f),Quaternion.Euler(-90.0f,randomRotationIndex*90.0f,0.0f));
+                randomTiles.transform.parent = Tileparent;
+            }
+        }
+    }
 
     private void OnGUI()
     {
-        var width = Screen.width * 0.5f;
-        var height = Screen.height * 0.5f;
-
-
-        GUI.Box(new Rect(width * 0.5f, 10.0f, width, height), "Statistics go here");
-
-        GUI.Label(new Rect(width - 50.0f, 50.0f, 100.0f, 30.0f), "Data goes here");
-
-        if (GUI.Button(new Rect(width - 50.0f, 100.0f, 100.0f, 30.0f), "Start"))
+        var scene = SceneManager.GetActiveScene();
+        if (scene.name == "Start")
         {
-            SceneManager.LoadScene("Main");
-        }
+            var width = Screen.width * 0.5f;
+            var height = Screen.height * 0.5f;
 
+
+            GUI.Box(new Rect(width * 0.5f, 10.0f, width, height), "Statistics go here");
+
+            GUI.Label(new Rect(width - 50.0f, 50.0f, 100.0f, 30.0f), "Data goes here");
+
+            if (GUI.Button(new Rect(width - 50.0f, 100.0f, 100.0f, 30.0f), "Start"))
+            {
+                SceneManager.LoadScene("Main");
+            }
+        }
         
     }
 }
